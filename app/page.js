@@ -1,101 +1,151 @@
+import { Miriam_Libre, Roboto, Roboto_Serif } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
+import SearchBar from "./SearchBar";
+import SearchBtn from "./SearchBtn";
+import SearchIcon from "./svg/Search";
+import LocationSvg from "./svg/Location";
+
+const MiriamLibreFont = Miriam_Libre({
+  subsets: ["latin"],
+});
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className={`bg-background w-full min-h-screen flex gap-12 flex-col`}>
+      <div className="flex flex-col gap-6">
+      <header className="flex items-center justify-between p-6">
+        <div className="">
+          <h1
+            className={`text-title uppercase text-lg ${MiriamLibreFont.className} `}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            JOB <span className=" text-primary">Portal</span>
+          </h1>
         </div>
+        <nav className=" md:flex items-center justify-center hidden">
+          <ul className="flex justify-center text-sm gap-11 text-center *:opacity-75 *:hover:opacity-100 text-primary capitalize items-center">
+            <li>
+              <Link href="#" className="">
+                dahsboard
+              </Link>
+            </li>
+            <SearchBtn>
+              <li>Search</li>
+            </SearchBtn>
+            <li>
+              <Link href="#" className="">
+                applied jobs
+              </Link>
+            </li>
+            <li>
+              <Link href="#" className="">
+                applied jobs
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <div className="flex items-center justify-center w-20">
+          <div className={`max-sm:block hidden`}>
+            <SearchBtn>
+              <SearchIcon width={30} height={30} color={"white"} />
+            </SearchBtn>
+          </div>
+          <div className=" rounded-full bg-primary w-12 h-12 outline-2 outline-title border-2 border-background ">
+            <Image
+              src={
+                "https://lh3.googleusercontent.com/a/ACg8ocKWES-QsWR0WlymRMsed03YHdtTCmFdp1Don9SmCHKUCytNZPA=s432-c-no"
+              }
+              alt=""
+              width={50}
+              height={50}
+              className="w-full h-full rounded-full overflow-hidden"
+            ></Image>
+          </div>
+        </div>
+      </header>
+      <SearchBar />
+      </div>
+
+      <main className="flex flex-col gap-10 capitalize">
+        <section className="w-full items-center justify-center flex flex-col gap-5">
+          <div className="w-11/12">
+            <h1 className="text-text font-bold">Recent Jobs</h1>
+          </div>
+          <div className="w-full flex items-start  justify-start">
+            <div className="w-full flex items-center justify-center">
+              <div className=" max-w-full max-sm:p-3 *:shadow-lg *:bg-secondaryColor *:rounded-lg flex flex-wrap *:w-72 *:max-sm:w-96 *:max-lg:w-80 *:max-xl:w-80 *:h-64 gap-5 justify-center items-center">
+                {/* JOb cards */}
+
+                <div
+                  data-container={"Job cards"}
+                  className=" flex flex-col overflow-hidden px-4 justify-center gap-2.5 capitalize"
+                >
+                  <div
+                    data-container={"card heading"}
+                    className="flex items-center justify-between gap-1"
+                  >
+                    <div>
+                      <h2 className="text-sm text-gray-700">Company name</h2>
+                      <h1 className=" text-sm font-semibold max-h-5/6 line-clamp-2">Senior Frontend fevsank</h1>
+                    </div>
+                    <div>
+                      <Image
+                        height={50}
+                        width={50}
+                        className="rounded-full min-w-[40px] "
+                        alt=""
+                        src={
+                          "https://lh3.googleusercontent.com/a/ACg8ocKWES-QsWR0WlymRMsed03YHdtTCmFdp1Don9SmCHKUCytNZPA=s432-c-no"
+                        }
+                      ></Image>
+                    </div>
+                  </div>
+                  <div
+                    data-container={"card price"}
+                    className=" w-full flex flex-col gap-1"
+                  >
+                    <div className="text-sm font-semibold text-green-600">$21000 - 31000</div>
+                    <p className="text-xs font-extralight text-justify line-clamp-3 overflow-hidden">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Veniam fugit provident ea tempora sapiente voluptatibus,
+                      mollitia vitae. Laboriosam expedita quam dolor! Accusamus
+                      non doloremque maxime nam minus fuga ducimus quia.
+                    </p>
+                  </div>
+                      <div className=" text-sm font-semibold">Location,india</div>
+                  <div data-container={"card buttons"} className=" flex flex-col gap-3">
+                    <div className=" flex justify-between *:px-4 py-1 *:h-8 *:rounded-md">
+                      <button className=" border border-green-600">On-site</button>
+                      <button className="bg-green-600 border border-green-600 text-background font-semibold cursor-pointer">Apply</button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* JObs cards ending */}
+
+                <div className=""></div>
+                <div className=""></div>
+                <div className=""></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="w-full items-center justify-center flex flex-col gap-5">
+          <div className="w-11/12">
+            <h1 className="text-text font-bold">Applied Jobs</h1>
+          </div>
+          <div className="w-full min-h-96 flex items-start  justify-start">
+            <div className="w-full flex items-center justify-center">
+              <div className=" max-w-full max-sm:p-3 *:animate-pulse *:shadow-lg *:bg-secondaryColor *:rounded-md flex flex-wrap *:w-72 *:max-sm:w-96 *:max-lg:w-80 *:max-xl:w-80 *:h-64 gap-5 justify-center items-center">
+                <div className=""></div>
+                <div className=""></div>
+                <div className=""></div>
+                <div className=""></div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

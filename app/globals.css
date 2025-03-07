@@ -1,21 +1,37 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f5f5;
+  --primaryColor: #313638;
+  --secondaryColor: #e6e6e6;
+  --titleColor: #26B356;
+  --textColor: #171717;
+  --boxTextColor: #707070;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #171717;
+    --primaryColor: #F1F1F1;
+    --secondaryColor : #313638;
+  --textColor: #f5f5f5;
   }
 }
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-primary: var(--primaryColor);
+  --color-title: var(--titleColor);
+  --color-text: var(--textColor);
+  --color-boxText: var(--boxTextColor);
+  --color-secondaryColor: var(--secondaryColor);
+  --shadow-searchBox : 0px 2px 8px 0px rgba(60, 64, 67, 0.25)
+  
+}
+
+
 
 body {
   color: var(--foreground);
