@@ -1,0 +1,17 @@
+job data = {
+    title,
+    description,
+    company,
+    salary,
+    type,
+    location,
+    skills,
+    experience,
+},
+company data = {
+    name,
+    description,
+    location,
+    
+}
+
