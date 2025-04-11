@@ -2,38 +2,42 @@
 
 import React, { useEffect, } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import JobCards from '../JobCards'
-import { addGlobalListToFirst } from '@/lib/features/JobList'
+import { addToGlobalJobList } from '@/lib/features/JobList'
+import { setDataExist } from '@/lib/features/checkData'
+import JobCards from '@/FirstPage/JobCards'
 
-function JobSection({jobs }) {
+function JobSection({jobs}) {
 
     const filterJobs = useSelector(state => state.filterJobs)
-    const globalJobs = useSelector(state => state.GlobalJobList)
+    const checkData = useSelector(state => state.checkData)
     const dispatch = useDispatch()
 
+    console.log(checkData);
+    
     useEffect(() => {
         
         if(!filterJobs.length) {
-            console.log(globalJobs);
+            dispatch(addToGlobalJobList(jobs))
         }
         else {
             console.log("already have values");
-            
         }
     }, [])
     return (
         <>
             {
-                filterJobs?.length ? filterJobs.map((job, index) => (
+                filterJobs.length ? filterJobs.map((job, index) => (
                     <JobCards job={job} key={index} />
-                )) :
-                    (
-                        <>
-
-                        </>
-                    )
+                )) : 
+                <>
+                </>
             }
-
+            {
+                    checkData && Array.from({length : 1}).map((val,index) => (
+                        <div key={index} className=' animate-pulse'></div>
+                    )) 
+            }
+            
         </>
     )
 }

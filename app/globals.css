@@ -13,8 +13,8 @@
   :root {
     --background: #171717;
     --primaryColor: #F1F1F1;
-    --secondaryColor : #313638;
-  --textColor: #f5f5f5;
+    --secondaryColor: #313638;
+    --textColor: #f5f5f5;
   }
 }
 
@@ -27,9 +27,9 @@
   --color-text: var(--textColor);
   --color-boxText: var(--boxTextColor);
   --color-secondaryColor: var(--secondaryColor);
-  --shadow-searchBox : 0px 2px 8px 0px rgba(60, 64, 67, 0.25);
+  --shadow-searchBox: 0px 2px 8px 0px rgba(60, 64, 67, 0.25);
   --grid-cols-custom: repeat(auto-fit, minmax(200px, 1fr));
-  
+
 }
 
 

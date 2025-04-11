@@ -1,12 +1,12 @@
-import JobCards from "./JobCards";
+
 import { readJobs } from "./MongoDB";
-import RecentJobs from "./RecentJobs";
+import RecentJobs from "../FirstPage/RecentJobs";
 
 
 
 export default async function Home() {
 
-  let jobs = await readJobs(null, 0)
+  let jobs = await readJobs(null,0)
 
   return (
 
@@ -19,13 +19,7 @@ export default async function Home() {
         <div className="w-full flex items-start  justify-start">
           <div className="w-full flex items-center justify-center">
             <div className=" w-full *:shadow-lg *:bg-secondaryColor *:rounded-lg grid max-sm:grid-cols-1 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-3 2xl:grid-cols-5 overflow-hidden *:h-72 gap-8 px-5 lg:px-6">
-              <RecentJobs jobs={jobs}>
-                {
-                  jobs.map((job, index) => (
-                    <JobCards job={job} key={index} />
-                  ))
-                }
-              </RecentJobs>
+              <RecentJobs jobs={jobs} />
             </div>
           </div>
         </div>

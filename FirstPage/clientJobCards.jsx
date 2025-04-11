@@ -19,8 +19,9 @@ function ClientJobCards({ serverJobList }) {
             try {
                 let jobCards = await FetchJobs(skip)
                 if (jobCards.length) {
-                    dispatch(setSkipValue())
                     console.log(skip);
+                    dispatch(setSkipValue())
+
                     dispatch(addToGlobalJobList(jobCards))
                 } else {
                     setBtnEnable(false)
@@ -34,15 +35,27 @@ function ClientJobCards({ serverJobList }) {
 
     }
     useEffect(() => {
-            return () => {
-            serverJobList.map((job) => {
-                let check = globalJobs.some((obj) => obj._id == job._id)
-                if (!check) {
-                    dispatch(addGlobalListToFirst([job]))
+        if (!globalJobs.length && serverJobList.length) {
+            console.log("start adding jobs");
+            startTransition(async () => {
+                try {
+                    dispatch(addGlobalListToFirst(serverJobList))
+                    console.log(globalJobs);
+                    
+                    console.log("initial data loaded");
+                }
+                catch (err) {
+                    console.log("Some error caught first fetching");
+                    console.dir(err)
+                }
+                finally {
+                    startTransition(() => {
+                        setBtnEnable(true)
+                    })
                 }
             })
         }
-    }, [])  
+    }, [globalJobs])
 
 
     return (
@@ -50,6 +63,13 @@ function ClientJobCards({ serverJobList }) {
             {
                 globalJobs.map((job, index) => (
                     <JobCards key={index} job={job} />
+                ))
+            }
+            {
+                !globalJobs.length && Array.from({length : 4}).map((job, index) => (
+                    <div key={index} className=' animate-pulse'>
+
+                    </div>
                 ))
             }
             {

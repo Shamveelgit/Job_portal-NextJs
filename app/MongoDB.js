@@ -30,12 +30,14 @@ const addJob = async (data) => {
 const readJobs = async (data, skip) => {
     const db = await AccessDB()
     if (data) {
-        if(data.length >= 1) {
+        if (data.length >= 1) {
+            // filtering already fetched jobs id
             const id_existData = data.map(job => job._id)
             const jobs = await db.collection("jobs").find(
                 {
-                    _id : {
-                        $nin : id_existData
+                    _id: {
+                        // the operator remove all jobs from the given id
+                        $nin: id_existData
                     }
                 }
             ).skip(skip).limit(10)
@@ -43,9 +45,10 @@ const readJobs = async (data, skip) => {
         }
         const jobs = await db.collection("jobs").findOne(data)
         return jobs
+
     }
     else {
-        const jobs = await db.collection("jobs").find().skip(skip * 5).limit(5).toArray()
+        const jobs = await db.collection("jobs").find().skip(skip * 10).limit(10).toArray()
         console.log("job returned");
         console.log(jobs.length);
         return jobs.map(job => ({
@@ -56,31 +59,25 @@ const readJobs = async (data, skip) => {
     }
 }
 
-const searchData = async (searchVal) => {
+const searchData = async (searchVal, skipVal) => {
+    // first we create index
     const db = await AccessDB()
     if (searchVal) {
-        let jobs = await db.collection("jobs").aggregate([
-            {
-                $search: {
-                    index: "default",
-                    Text: {
-                        query: searchVal.toString(),
-                        path: 'title'
-                    },
-                    $project: {
-                        title : 1,
-                        description : 1,
-                        company : 1,
-                        salary : 1,
-                        type  : 1,
-                        location : 1,
-                        skills : 1,
-                        experience : 1
-                    }
+        try {
+            let jobs = await db.collection("jobs").find({
+                $text: {
+                    $search: searchVal
                 }
-            }
-        ]).toArray()
-        return jobs
+            }).limit(5).skip(skipVal * 5).toArray()
+            return jobs.map((job) => ({
+                ...job,
+                _id: job._id.toString()
+            }))
+        }
+        catch (err) {
+            console.log(err);
+            return err
+        }
     }
 }
 

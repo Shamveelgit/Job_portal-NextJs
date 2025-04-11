@@ -15,3 +15,7 @@ company data = {
     
 }
 
+library = {
+    use-debounce,
+    nextAuth
+}
