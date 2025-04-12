@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import { makeStore } from '../lib/store'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { SessionProvider } from 'next-auth/react'
 
 
 export default function StoreProvider({ children }) {
@@ -18,7 +19,10 @@ export default function StoreProvider({ children }) {
   return (
     <Provider store={storeRef.current}>
       <QueryClientProvider client={queryClient}>
+        <SessionProvider>
+
           {children}
+        </SessionProvider>
       </QueryClientProvider>
     </Provider>
   )

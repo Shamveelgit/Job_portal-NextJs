@@ -1,6 +1,6 @@
 
 import { readJobs } from "./MongoDB";
-import RecentJobs from "../FirstPage/RecentJobs";
+import RecentJobs from "../../FirstPage/RecentJobs";
 
 
 

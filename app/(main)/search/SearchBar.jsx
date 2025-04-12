@@ -1,7 +1,7 @@
 "use client"
 import { Roboto } from 'next/font/google'
 import React, { useEffect } from 'react'
-import SearchIcon from '../svg/Search'
+import SearchIcon from '../../svg/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSearchValue } from '@/lib/features/SearchBarValue'
 import { setFilterJobs } from '@/lib/features/FilteredJobs'

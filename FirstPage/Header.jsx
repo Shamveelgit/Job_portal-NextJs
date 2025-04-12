@@ -2,11 +2,11 @@
 import React from 'react'
 import Link from "next/link";
 import Image from "next/image";
-import profileSvg from "../app/svg/profile.svg";
 import { Geist, Geist_Mono, Miriam_Libre } from "next/font/google";
 import { useSession } from 'next-auth/react';
-import SearchBtn from '@/app/search/SearchBtn';
+import SearchBtn from '@/app/(main)/search/SearchBtn';
 import SearchIcon from '@/app/svg/Search';
+import profileIcon from '@/app/svg/profile.svg';
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -26,6 +26,7 @@ export const metadata = {
 };
 
 function Header() {
+    const {data : session} = useSession()
     return (
         <>
             <header className="flex items-center justify-between p-6">
@@ -73,7 +74,7 @@ function Header() {
                     </div>
                     <div className=" rounded-full bg-primary w-12 h-12 outline-2 outline-title border-2 border-background ">
                         <Image
-                            src={ profileSvg}
+                            src={session?.user.image || profileIcon}
                             alt=""
                             width={50}
                             height={50}

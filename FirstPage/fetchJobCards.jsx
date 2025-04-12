@@ -1,6 +1,6 @@
 'use server';
 
-import { readJobs } from "@/app/MongoDB";
+import { readJobs } from "@/app/(main)/MongoDB";
 
 export async function FetchJobs(skipVal,data) {
     console.log("Fetching jobs with skip:", skipVal);

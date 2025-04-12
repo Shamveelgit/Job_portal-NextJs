@@ -1,23 +1,30 @@
 import Header from "@/FirstPage/Header";
 import "./globals.css";
 import StoreProvider from "@/FirstPage/Providers";
+import Head from "next/head";
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  // Also supported but less commonly used
+  // interactiveWidget: 'resizes-visual',
+}
+
 
 export default function RootLayout({ children }) {
 
 
 
-
   return (
     <html lang="en" webcrx="true">
-      <head>
+      <Head>
         <link rel="icon" href="https://lh3.googleusercontent.com/a/ACg8ocKWES-QsWR0WlymRMsed03YHdtTCmFdp1Don9SmCHKUCytNZPA=s432-c-no" ></link>
-      </head>
+      </Head>
       <StoreProvider>
           <body className="">
-            <div className={`bg-background w-full min-h-screen flex flex-col gap-10 transition-colors duration-500`}>
-              <Header />
-              {children}
-            </div>
+            {children}
           </body>
       </StoreProvider>
     </html>
