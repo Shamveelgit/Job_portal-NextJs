@@ -7,7 +7,7 @@ const inter = Inter({
 })
 const Applicants = () => {
     return (
-        <div role='button' tabIndex={0} className={` w-72 flex items-center justify-start  hover:outline-1 focus:outline-1 focus:outline-neutral-50 hover:outline-neutral-50 flex-col text-black gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 transition-all duration-300  rounded-xl ${inter.className}`}>
+        <div role='button' tabIndex={0} className={` w-72 flex items-center justify-start  hover:outline-1 hov focus:outline-1 focus:outline-neutral-50 hover:outline-neutral-50 flex-col text-black gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 transition-all duration-300  rounded-xl ${inter.className}`}>
             <div id='' className=' w-full flex gap-3 '>
                 <Image loading='lazy' src={""} className='bg-gray-500 rounded-full w-12 h-12' width={48} height={48} />
                 <div>

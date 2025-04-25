@@ -1,3 +1,3 @@
-import { handlers } from "@/app/(main)/auth"
+import { handlers } from "@/app/(main)/dashboard/auth"
 
 export const { GET, POST } = handlers

@@ -9,6 +9,23 @@
   --boxTextColor: #707070;
 }
 
+@keyframes leftToRight {
+  from {
+    /* transform: translateX(5rem); */
+  }
+  to {
+    transform: translateX(0rem);
+  }
+}
+@keyframes rightToLeft {
+  from {
+    /* transform: translateX(-5rem); */
+  }
+  to {
+    transform: translateX(0rem);
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #171717;
@@ -29,6 +46,8 @@
   --color-secondaryColor: var(--secondaryColor);
   --shadow-searchBox: 0px 2px 8px 0px rgba(60, 64, 67, 0.25);
   --grid-cols-custom: repeat(auto-fit, minmax(200px, 1fr));
+  --animate-LeftToRIght : leftToRight ease-in .2s forwards;
+  --animate-rightToLeft : rightToLeft ease-in .2s forwards;
 
 }
 

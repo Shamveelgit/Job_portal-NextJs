@@ -3,7 +3,7 @@ import React from 'react'
 import Link from "next/link";
 import Image from "next/image";
 import { Geist, Geist_Mono, Miriam_Libre } from "next/font/google";
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import SearchBtn from '@/app/(main)/search/SearchBtn';
 import SearchIcon from '@/app/svg/Search';
 import profileIcon from '@/app/svg/profile.svg';
@@ -42,7 +42,7 @@ function Header() {
                 <nav className=" md:flex items-center justify-center hidden">
                     <ul className="flex justify-center text-sm gap-11 text-center *:opacity-75 *:hover:opacity-100 text-primary capitalize items-center">
                         <li>
-                            <Link href="/" className="">
+                            <Link href="/dashboard" className="">
                                 dahsboard
                             </Link>
                         </li>
@@ -52,14 +52,16 @@ function Header() {
                             </Link>
                         </SearchBtn>
                         <li>
-                            <Link href="#" className="">
+                            <Link href="/appliedjobs" className="">
                                 applied jobs
                             </Link>
                         </li>
                         <li>
-                            <Link href="#" className="">
-                                applied jobs
-                            </Link>
+                            <button className="" onClick={() => {
+                                signOut()
+                            }}>
+                                Log out
+                            </button>
                         </li>
                     </ul>
                 </nav>
@@ -74,7 +76,7 @@ function Header() {
                     </div>
                     <div className=" rounded-full bg-primary w-12 h-12 outline-2 outline-title border-2 border-background ">
                         <Image
-                            src={session?.user.image || profileIcon}
+                            src={false || profileIcon}
                             alt=""
                             width={50}
                             height={50}

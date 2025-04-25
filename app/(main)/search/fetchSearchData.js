@@ -1,6 +1,6 @@
 'use server';
 
-import { searchData } from "../MongoDB";
+import { searchData } from "../dashboard/MongoDB";
 
 
 export async function fetchSearchData(skipVal,data) {

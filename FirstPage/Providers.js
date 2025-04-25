@@ -20,7 +20,6 @@ export default function StoreProvider({ children }) {
     <Provider store={storeRef.current}>
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
-
           {children}
         </SessionProvider>
       </QueryClientProvider>
