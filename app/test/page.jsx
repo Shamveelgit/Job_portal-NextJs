@@ -1,5 +1,6 @@
 "use client"
 import Applicants from '@/components/applicants'
+import IsUserRole from '@/components/isUserRole'
 import { removeToAppliedJobs } from '@/lib/features/applidJob'
 import { useSession } from 'next-auth/react'
 import React from 'react'
@@ -14,7 +15,7 @@ function page() {
 
   return (
     <div className=' flex items-center justify-center w-full h-screen text-white'>
-        <Applicants />
+      <IsUserRole />
     </div>
   )
 }

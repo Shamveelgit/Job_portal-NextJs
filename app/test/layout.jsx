@@ -1,14 +1,19 @@
 import React from 'react'
-import { checkUserExist } from '../(main)/dashboard/MongoDB'
+import { checkUserExist, updateUserRole } from '../MongoDB'
 import bcrypt from "bcrypt"
 
 async function layout({children}) {
-  
-  let passHash = await bcrypt.hash("hello",5)
-  console.log(passHash);
-  
+    
   return (
     <div>
+      <button onClick={async () => {
+        "use server"
+        console.log("runnig");
+        
+        let user = await updateUserRole("6812305e1666a6163d922db9","company") 
+        console.log(user);
+        
+      }}>Hello test purpose</button>
         {children}
     </div>
   )
