@@ -1,16 +1,16 @@
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import Google from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
-import { addUserProfile, checkUserExist, updateUserRole,  } from "./MongoDB"
+import { addCompanyProfile, addUserProfile, checkUserExist, createAppliedJobList, updateUserRole, } from "./MongoDB"
 import NextAuth, { NextAuthConfig, User } from "next-auth"
 import bcrypt from "bcrypt"
 import { cookies } from "next/headers";
 import clientPromise from "../lib/db";
-import { RoleType, UserType } from "../types/Types";
+import { Credentials, RoleType, UserType } from "../types/Types";
 
 
 interface ExtendedUser extends User {
-  role : RoleType
+  role: RoleType
 }
 interface ExtendedToken {
   id?: string;
@@ -18,10 +18,8 @@ interface ExtendedToken {
   name?: string | null;
   picture?: string | null;
   role?: RoleType | null;
-  emailVerified : Date | null
+  emailVerified: Date | null
 }
-type test = NextAuthConfig
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   pages: {
@@ -40,10 +38,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: {},
         password: {},
       },
-      authorize: async (credential: Partial<Record<"email" | "password" | "role", unknown>>, request: Request): Promise<ExtendedUser | null> => {
+      authorize: async (credential: Partial<Record<string, unknown>>,): Promise<ExtendedUser | null> => {
         // check user exist        
-        try { 
-          let user = await checkUserExist({ email: credential.email as string})
+        try {
+          let user = await checkUserExist({ email: credential.email as string })
           console.log(user);
           if (!user) {
             console.log("there is no user sorry browser");
@@ -63,10 +61,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               console.log("user password is wrong");
               return null
             }
+            return null
           }
         }
         catch (err) {
-          console.log("error in authorizing user"); 
+          console.log("error in authorizing user");
           return null
 
         }
@@ -78,22 +77,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    redirect : ({baseUrl,url}) => {
+    redirect: ({ baseUrl, url }) => {
       return baseUrl
     },
 
-    async jwt({ token, user, account, profile, session, trigger }) : Promise<UserType | null> {
-      console.log("jwt called"); 
+    async jwt({ token, user, account, profile, session, trigger }): Promise<UserType | null> {
+      console.log("jwt called");
       if (user) {
         token.id = token.jti,
-        token.email = user.email
+          token.email = user.email
         token.name = user.name
         token.picture = user.image
       }
-      return await checkUserExist({ email: token.email as string }) ? token as UserType  : null
+      return await checkUserExist({ email: token.email as string }) ? token as UserType : null
     }
     ,
-     session({ session, token, user, newSession, trigger }){
+    session({ session, token, user, newSession, trigger }) {
+
       console.log("session called");
       if (token) {
         session.user = {
@@ -101,26 +101,47 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: token.name,
           email: token.email as string,
           image: token.picture,
-          emailVerified : user?.emailVerified, 
-          role : token.role || null         
+          emailVerified: user?.emailVerified,
+          role: token.role as RoleType
         }
       }
-      return session 
+      return session
 
     },
   },
   events: {
-    createUser: async ({user}) => {
+    createUser: async ({ user }) => {
       console.log("calling creaetUSer");
+      let userRole = (await cookies()).get("userRole")?.value
       try {
-        
-        await addUserProfile({
-          name: user.name as string,
-          email: user.email as string,
-          image : user.image as string,
-        })
+        if (userRole === "employee") {
+          await addUserProfile({
+            name: user.name as string,
+            email: user.email as string,
+            image: user.image as string,
+          }).then(async () => {
+            console.log("user profile created");
+            await createAppliedJobList(user.id as string).then((val) => {
+              console.log("applied job list created");
+            })
+
+          })
+        }
+        else if (userRole === "company") {
+          await addCompanyProfile({
+            name: user.name as string,
+            email: user.email as string,
+            image: user.image as string,
+          }).then((val) => {
+            console.log("company profile created");
+
+          })
+        } else {
+          console.log("both user and company can't create");
+
+        }
         await updateUserRole(user.id, (await cookies()).get("userRole")?.value as RoleType)
-        console.log("user profile created succesfull");
+        console.log(" profile created succesfull");
 
       }
       catch (err) {

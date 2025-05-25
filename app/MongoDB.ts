@@ -4,15 +4,26 @@ import clientPromise from "../lib/db"
 import { JobsData, jobType, RoleType, UserProfile, UserType, DbError, companyProfile, Credentials } from "../types/Types"
 
 
+type Databases = "job-portal" | "Users"
 
 
 const url = "mongodb://localhost:27017"  // url of mongod server
 const client = new MongoClient(url)
 
-const AccessDB = async (): Promise<Db> => {
+const jobPortalDb = async (): Promise<Db> => {
     try {
         await clientPromise
-        return client.db("job-portal")
+        return client.db("job-portal" as Databases)
+
+    }
+    catch (err: any) {
+        throw new Error("error connecting to database " + err.message)
+    }
+}
+const usersDb = async (): Promise<Db> => {
+    try {
+        await clientPromise
+        return client.db("Users" as Databases)
 
     }
     catch (err: any) {
@@ -21,12 +32,12 @@ const AccessDB = async (): Promise<Db> => {
 }
 
 const JobsCollection = async () => {
-    const db = await AccessDB()
+    const db = await jobPortalDb()
     return await db.collection<jobType>("jobs")
 }
 
 const addJob = async (data: jobType) => {
-    const db = await AccessDB()
+    const db = await jobPortalDb()
     if (db) {
         const job = await (await JobsCollection()).insertOne(data)
         return job
@@ -39,7 +50,7 @@ const addJob = async (data: jobType) => {
 
 
 const readJobs = async (skip: number, id_existData?: number[] | null): Promise<JobsData> => {
-    const db = await AccessDB()
+    const db = await jobPortalDb()
     if (id_existData) {
         if (id_existData.length >= 1) {
             // filtering already fetched jobs id
@@ -51,7 +62,13 @@ const readJobs = async (skip: number, id_existData?: number[] | null): Promise<J
                     }
                 }
             ).skip(skip).limit(10).toArray()
-            return jobs
+
+            return jobs.map(job => (
+                {
+                    ...job,
+                    _id: job._id?.toString()
+                }
+            ))
         }
         const jobs = await (await JobsCollection()).findOne({
             _id: new ObjectId(id_existData[0])
@@ -68,7 +85,7 @@ const readJobs = async (skip: number, id_existData?: number[] | null): Promise<J
     }
 }
 
-const searchData = async (searchVal: string, skipVal: number): Promise<JobsData> => {
+const jobSearch = async (searchVal: string, skipVal: number): Promise<JobsData> => {
     // first we create index
     if (searchVal) {
         try {
@@ -91,8 +108,8 @@ const searchData = async (searchVal: string, skipVal: number): Promise<JobsData>
 }
 
 
-const checkUserExist = async ({ email, password, checkWithPassword }: Credentials ): Promise<UserType>=> {
-    const db = await AccessDB()
+const checkUserExist = async ({ email, password }: Credentials, checkWithPassword?: boolean): Promise<UserType> => {
+    const db = await usersDb()
     let cred = checkWithPassword ? { email, password } : { email }
     let user = await db.collection<UserType>('users').findOne(cred)
     return user as UserType
@@ -101,7 +118,7 @@ const checkUserExist = async ({ email, password, checkWithPassword }: Credential
 
 
 const createUser = async (email: string, password: string, role: RoleType, emailVerified: Date, name: string) => {
-    const db = await AccessDB()
+    const db = await usersDb()
     let user = await db.collection('users').insertOne({
         name,
         email,
@@ -115,27 +132,29 @@ const createUser = async (email: string, password: string, role: RoleType, email
 
 
 const addUserProfile = async (data: UserProfile) => {
-    const db = await AccessDB()
+    const db = await usersDb()
     let user = await db.collection<UserProfile>('userProfile').insertOne(data)
     return user
 }
 
-const addCompanyProfile = async ({ jobPosts, name, description, email, image, location, phone }: companyProfile) => {
-    const db = await AccessDB();
-    let user = await db.collection<companyProfile>("companyProfile").insertOne({
-        name,
-        jobPosts,
-        description,
-        email,
-        image,
-        location,
-        phone
-    })
+const addCompanyProfile = async (data: companyProfile) => {
+    const db = await usersDb();
+    let user = await db.collection<companyProfile>("companyProfile").insertOne(data)
     return user
 }
 
+const createAppliedJobList = async (userId: string) => {
+    const db = await jobPortalDb()
+    let appliedJobList = await db.collection("appliedJobs").insertOne({
+        userId: new ObjectId(userId),
+        appliedJobs: [],
+        saveJobs: []
+    })
+    return appliedJobList
+}
+
 const updateUserRole = async (id: string | undefined, role: RoleType) => {
-    const db = await AccessDB()
+    const db = await usersDb()
     let user = await db.collection("users").updateOne(
         {
             _id: new ObjectId(id)
@@ -148,14 +167,38 @@ const updateUserRole = async (id: string | undefined, role: RoleType) => {
     )
     return user
 }
+// const getAppliedJobs = async (skip : number) => {
+//     const db = await jobPortalDb()
+//     let userProfile = await db.collection<UserProfile>("userProfile").find().skip(skip).toArray()
+//     return userProfile.map(profile => ({
+//         ...profile,
+
+//     }))
+// } 
+
+const saveJobs  = async (id : string) => {
+    let db = await jobPortalDb()
+    let saveJob = await db.collection("appliedJobs" as Databases).updateOne({
+        _id : new ObjectId(id)
+    },{
+        $addToSet : {
+            saveJobs : "hello"
+        }
+    })
+    return saveJob
+}
+
+
 export {
+    saveJobs,
     readJobs,
     addJob,
-    searchData,
+    jobSearch,
     checkUserExist,
     createUser,
     addUserProfile,
     updateUserRole,
-    addCompanyProfile
+    addCompanyProfile,
+    createAppliedJobList
 }
 

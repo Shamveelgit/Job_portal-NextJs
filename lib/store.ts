@@ -8,6 +8,7 @@ import skipValue from "./features/SkipValue"
 import checkData from "./features/checkData"
 import appliedJobs from "./features/applidJob"
 import GlobalJobList from "./features/JobList"
+import showRoleUI from "./features/ShowRoleUi"
 
 export const makeStore = () => configureStore({
     reducer: {
@@ -19,10 +20,12 @@ export const makeStore = () => configureStore({
         filterJobs,
         skipValue,
         checkData,
-        appliedJobs
+        appliedJobs,
+        showRoleUI
     }
 })
 export const store = makeStore()
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export type AppStore = typeof store

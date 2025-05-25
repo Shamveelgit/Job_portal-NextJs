@@ -20,7 +20,7 @@ interface FormData {
   termsAgree: boolean
 }
 
-function SignUpPage() {
+function SignUpPage() {  
   const [pending, startTransition] = useTransition()
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -77,9 +77,7 @@ function SignUpPage() {
           })
           console.log(newUser);
         } else {
-          console.error('Error signing in')
-          
-        }
+          console.log('Error signing in')        }
       } catch (error) {
         console.error('Request failed:', error)
       }
@@ -91,7 +89,7 @@ function SignUpPage() {
       <LoadingBar state={pending} />
       <form
         onSubmit={handleSubmit}
-        className="flex animate-rightToLeft flex-col max-w-full gap-5 justify-start items-stretch rounded-2xl"
+        className="flex animate-rightToLeft hideScrollBar flex-col max-w-full gap-5 justify-start items-stretch rounded-2xl"
       >
         {/* Header */}
         <div className="flex items-center justify-between w-full *:capitalize">

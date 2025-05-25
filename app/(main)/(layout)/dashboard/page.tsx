@@ -1,7 +1,7 @@
 
-import RecentJobs from "../../../FirstPage/RecentJobs";
-import { JobsData } from "../../../types/Types";
-import { readJobs } from "../../MongoDB";
+import RecentJobs from "../../../../FirstPage/RecentJobs";
+import { JobsData } from "../../../../types/Types";
+import { readJobs } from "../../../MongoDB";
 
 export default async function Home() {
 

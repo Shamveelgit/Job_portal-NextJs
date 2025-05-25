@@ -1,15 +1,15 @@
 "use client"
 
 import React, { useEffect, } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addToGlobalJobList } from '@/lib/features/JobList'
-
-import JobCards from '@/FirstPage/JobCards'
-function JobSection({jobs}) {
-
-    const filterJobs = useSelector(state => state.filterJobs)
-    const checkData = useSelector(state => state.checkData)
-    const dispatch = useDispatch()
+import { addToGlobalJobList } from '../../../../lib/features/JobList'
+import JobCards from '../../../../FirstPage/JobCards'
+import { JobsData, jobType } from '../../../../types/Types'
+import { UseAppDispatch, UseAppSelector } from '../../../../hooks/ReduxType'
+function JobSection({jobs} : {jobs : JobsData} ) {
+``
+    const filterJobs = UseAppSelector(state => state.filterJobs)
+    const checkData = UseAppSelector(state => state.checkData)
+    const dispatch = UseAppDispatch()
 
     console.log(checkData);
     

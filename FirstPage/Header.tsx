@@ -5,8 +5,9 @@ import Image from "next/image";
 import { Geist, Geist_Mono, Miriam_Libre } from "next/font/google";
 import { signOut, useSession } from 'next-auth/react';
 import profileIcon from "../app/svg/profile.svg"
-import SearchBtn from '../app/(main)/search/SearchBtn';
+import SearchBtn from '../app/(main)/(layout)/search/SearchBtn';
 import SearchIcon from '../app/svg/Search';
+import TitleUi from '../components/ui/TitleUi';
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -31,16 +32,12 @@ function Header() {
         <>
             <header className="flex items-center justify-between p-6">
                 <div className="">
-                    <Link href={"/"}>
-                        <h1
-                            className={`text-title uppercase text-lg ${MiriamLibreFont.className} `}
-                        >
-                            JOB <span className=" text-primary">Portal</span>
-                        </h1>
+                    <Link href={"/dashboard"}>
+                        <TitleUi />
                     </Link>
                 </div>
                 <nav className=" md:flex items-center justify-center hidden">
-                    <ul className="flex justify-center text-sm gap-11 text-center *:opacity-75 *:hover:opacity-100 text-primary capitalize items-center">
+                    <ul className="flex justify-center text-sm gap-11 text-center *:cursor-pointer *:opacity-75 *:hover:opacity-100 text-primary capitalize items-center">
                         <li>
                             <Link href="/dashboard" className="">
                                 dahsboard

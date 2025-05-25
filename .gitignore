@@ -39,3 +39,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 dummy.js
+app/api/apitest/
+app/test/*

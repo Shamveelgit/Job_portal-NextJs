@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 import { addCompanyProfile, addUserProfile, checkUserExist, createUser } from "../../MongoDB";
 import { Credentials, RoleType } from "../../../types/Types";
 
+// need to add user profile ui
 
 export async function POST(req: Request) {
 
@@ -18,7 +19,7 @@ export async function POST(req: Request) {
                     email,
                 })
             } else if (newUser.acknowledged && role === "employee") {
-                let userProfile = await addUserProfile({
+                let UserProfile = await addUserProfile({
                     name: name as string,
                     email,
                 })

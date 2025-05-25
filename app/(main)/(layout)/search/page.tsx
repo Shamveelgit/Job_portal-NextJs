@@ -1,7 +1,7 @@
 import React, { Suspense, use } from 'react'
 
 import JobSection from './JobSection' 
-import { FetchJobs } from '@/FirstPage/fetchJobCards'
+import { FetchJobs } from '../../../../FirstPage/fetchJobCards'
 async function page() {  
 
   const jobs = await FetchJobs(0) 

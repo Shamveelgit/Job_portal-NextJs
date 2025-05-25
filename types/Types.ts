@@ -1,11 +1,14 @@
 import { ObjectId, WithId } from "mongodb"
 
 export interface UserProfile {
-    name: string
+    _id? : string | ObjectId
+    name: string,
+    title? : string,
     email?: string
     image? : string
     phone?: string
-    location?: string
+    location?: string,
+    cv? : string,
     skills?: []
     experience?: number
     education?: {
@@ -48,14 +51,15 @@ export type UserType = {
     id? : string | undefined
 }
 export type Credentials = {
-    email  : string ,
-    password? : string,
-    role? : RoleType
-    name? : string
+    name? : string,
+    email  : string  ,
+    password? : string ,
+    role? : RoleType 
     checkWithPassword? : boolean
 }
 
-export  type RoleType = "employee" | "company"
+
+export type RoleType = "employee" | "company"
 
 export type DbError = {
     error : any,

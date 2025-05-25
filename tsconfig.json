@@ -28,6 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
+    "next-auth.d.ts",
     ".next/types/**/*.ts"
 , "app/(authentication)/login/page.jsx", "lib/db.js", "app/(authentication)/rightSection.jsx", "FirstPage/fetchJobCards.tsx"  ],
   "exclude": [

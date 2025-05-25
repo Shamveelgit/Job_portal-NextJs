@@ -36,11 +36,8 @@ function page() {
             let user = await signIn("credentials",{
               email : formData.email,
               password : formData.password,
-              redirect : false,
-            })
-            console.log(user);
-            
-            !user?.error && redirect("/dashboard")
+              redirect : true,
+            })            
           }
           catch(err) {
 
@@ -69,7 +66,7 @@ function page() {
             <Link href={"/login"} className=' text-blue-500 dark:text-blue-400'>Forgot password</Link>
           </div>
           <div className='w-full flex justify-center flex-col items-stretch'>
-            <ButtonTag type='submit'>
+            <ButtonTag className='h-10' type='submit'>
               Sign in
             </ButtonTag>
           </div>

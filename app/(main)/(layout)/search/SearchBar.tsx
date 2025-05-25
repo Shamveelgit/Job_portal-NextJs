@@ -1,14 +1,14 @@
 "use client"
 import { Roboto } from 'next/font/google'
 import React, { useEffect } from 'react'
-import SearchIcon from '../../svg/Search'
+import SearchIcon from '../../../svg/Search'
 import { fetchSearchData } from './fetchSearchData'
-import { setDataExist } from '../../../lib/features/checkData'
-import { UseAppDispatch, UseAppSelector } from '../../../hooks/ReduxType'
-import { setSearchValue } from '../../../lib/features/SearchBarValue'
-import { setFilterJobs } from '../../../lib/features/FilteredJobs'
-import { addToGlobalJobList } from '../../../lib/features/JobList'
-import { setSkipValue } from '../../../lib/features/SkipValue'
+import { setDataExist } from '../../../../lib/features/checkData'
+import { UseAppDispatch, UseAppSelector } from '../../../../hooks/ReduxType'
+import { setSearchValue } from '../../../../lib/features/SearchBarValue'
+import { setFilterJobs } from '../../../../lib/features/FilteredJobs'
+import { addToGlobalJobList } from '../../../../lib/features/JobList'
+import { setSkipValue } from '../../../../lib/features/SkipValue'
 
 
 const RobotoFont = Roboto({
@@ -56,7 +56,7 @@ const SearchBar = ({ }) => {
   }, [searchBarValue, allJobs])
 
   return (
-    <section className={` w-full px-3.5 flex items-center justify-center`}>
+    <section className={` w-full px-3.5 flex items-center justify-center animate-fadeInDown`}>
       <div className={`w-96 bg-gray-100 h-11 rounded-3xl p-4 font-normal text-base text-text shadow-searchBox ${RobotoFont.className} flex items-center`}>
         <div>
           <SearchIcon width={25} height={25} color={"black"} />
